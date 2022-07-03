@@ -1,37 +1,47 @@
-## Welcome to GitHub Pages
-
-You can use the [editor on GitHub](https://github.com/karvanpy/WebScraping/edit/gh-pages/index.md) to maintain and preview the content for your website in Markdown files.
-
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
-
-### Markdown
-
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
-
-```markdown
-Syntax highlighted code block
-
-# Header 1
-## Header 2
-### Header 3
-
-- Bulleted
-- List
-
-1. Numbered
-2. List
-
-**Bold** and _Italic_ and `Code` text
-
-[Link](url) and ![Image](src)
+# Welcome to the WebScraping Pages!
+Just because i don't like typing the same code again and again for doing Web Scraping even a simple website, so i made this!
+***
+Don't let their websites detect you as a bot! **Make your scraper like hooman instead!**
+```python
+HEADERS = {
+	'sec-ch-ua': '"(Not(A:Brand";v="8", "Chromium";v="99", "Google Chrome";v="99"',
+	'sec-ch-ua-platform': "Linux",
+	'sec-fetch-dest': 'empty',
+	'sec-fetch-mode': 'cors',
+	'sec-fetch-site': 'same-origin',
+	'user-agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/99.0.4844.35 Safari/537.36'
+}
+```
+## Scraping with Selenium
+The ammunition:
+```python
+import json
+from bs4 import BeautifulSoup
+from selenium import webdriver
+from selenium.webdriver.common.by import By
+from selenium.webdriver.chrome.options import Options
+```
+Setup the target
+```python
+url = "https://books.toscrape.com/"
+```
+Create the option if we want custom the weapon (for example: headless browser, window size, etc...)
+```python
+options = Options()
+options.headless = True
+```
+Apply custom setting to webdriver
+```python
+driver = webdriver.Chrome(options=options)
+driver.get(url)
 ```
 
-For more details see [Basic writing and formatting syntax](https://docs.github.com/en/github/writing-on-github/getting-started-with-writing-and-formatting-on-github/basic-writing-and-formatting-syntax).
+Get the target resource to the HTML format
+```python
+content = driver.page_source
+```
 
-### Jekyll Themes
-
-Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/karvanpy/WebScraping/settings/pages). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
-
-### Support or Contact
-
-Having trouble with Pages? Check out our [documentation](https://docs.github.com/categories/github-pages-basics/) or [contact support](https://support.github.com/contact) and we’ll help you sort it out.
+Play it with BeautifulSoup!
+```python
+soup = BeautifulSoup(content, "html.parser")
+```
